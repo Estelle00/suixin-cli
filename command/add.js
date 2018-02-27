@@ -2,10 +2,8 @@
  * Created by liubingwen on 2018/2/27.
  */
 const {prompt} = require('inquirer')
-const {writeFile} = require('fs')
-const {listTable} = require('../utils/index')
+const {writeTemplate} = require('../utils/index')
 const tplList = require('../templates')
-const {TEMPLATES_PATH} = require('../config/index')
 const question = [
   {
     type: 'input',
@@ -42,8 +40,5 @@ module.exports = prompt(question).then(({name, place, branch}) => {
   tplList[name] = {}
   tplList[name]['owner/name'] = place
   tplList[name]['branch'] = branch
-  writeFile(TEMPLATES_PATH, JSON.stringify(tplList), 'utf-8', err => {
-    if (err) console.log(err)
-    listTable(tplList, '新的模板添加成功！')
-  })
+  writeTemplate(tplList, '新的模板添加成功！')
 })

@@ -2,7 +2,9 @@
  * Created by liubingwen on 2018/2/27.
  */
 const Table = require('cli-table')
+const {writeFile} = require('fs')
 const chalk = require('chalk')
+const {TEMPLATES_PATH} = require('../config/index')
 const table = new Table({
   head: ['Template Name', 'Owner/Name', 'Branch'],
   style: {
@@ -32,6 +34,13 @@ function log (lyric) {
   }
   process.exit()
 }
+const writeTemplate = (tplList, lyric) => {
+  writeFile(TEMPLATES_PATH, JSON.stringify(tplList), 'utf-8', err => {
+    if (err) console.log(err)
+    listTable(tplList, lyric)
+  })
+}
 module.exports = {
-  listTable
+  listTable,
+  writeTemplate
 }

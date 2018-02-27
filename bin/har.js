@@ -22,7 +22,7 @@ program
   .description('列出所有可用模板！')
   .alias('l')
   .action(() => {
-    require('../command/list')()
+    require('../command/list')
   })
 
 program
@@ -30,7 +30,7 @@ program
   .description('初始化一个新的项目！')
   .alias('i')
   .action(() => {
-    require('../command/init')()
+    require('../command/init')
   })
 
 program
@@ -38,7 +38,7 @@ program
   .description('删除一个模板！')
   .alias('d')
   .action(() => {
-    require('../command/delete')()
+    require('../command/delete')
   })
 
 program.parse(process.argv)
