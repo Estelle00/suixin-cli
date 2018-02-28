@@ -5,9 +5,8 @@ const program = require('commander')
 
 program
   .version(require('../package').version)
-
-program
-  .usage('<command>')
+  .usage('<command> [options]')
+  .parse(process.argv)
 
 program
   .command('add')
@@ -26,11 +25,12 @@ program
   })
 
 program
-  .command('init')
+  .command('init [project-name]')
   .description('初始化一个新的项目！')
   .alias('i')
-  .action(() => {
-    require('../command/init')
+  .action((project) => {
+    console.log(`输如内容：projectName=${project}`)
+    require('../command/init')(project)
   })
 
 program

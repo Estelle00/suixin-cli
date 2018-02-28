@@ -42,47 +42,36 @@ const ora = require('ora')
 const tplList = require('../templates')
 const questions = [
   {
-    type: 'input',
+    type: 'list',
     name: 'name',
-    message: '请输入需要的模板名称：',
-    validate (val) {
-      if (val === '') {
-        return '模板名称不能为空！'
-      } else if (tplList[val]) {
-        return true
-      }
-      return '您输入的模板不存在！'
-    }
-  },
-  {
-    type: 'input',
-    name: 'project',
-    message: '请输入项目名称：',
-    validate (val) {
-      if (val === '') {
-        return '项目名称不能为空！'
-      }
-      return true
-    }
+    message: '请选择需要生成的模板：',
+    choices: Object.keys(tplList)
   },
   {
     type: 'input',
     name: 'place',
     message: '请输入初始化项目路径：',
-    default: './'
+    default: '../'
   }
 ]
-module.exports = prompt(questions).then(({name, project, place}) => {
-  const gitPlace = tplList[name]['owner/name']
-  const gitBranch = tplList[name]['branch']
-  const spinner = ora('模板下载中...')
-  spinner.start()
-  download(`${gitPlace}#${gitBranch}`, `${place}${project}`, err => {
-    if (err) {
-      console.log(chalk.red(err))
-      process.exit()
-    }
-    spinner.stop()
-    console.log(chalk.green('项目初始化成功！'))
+const errorLog = (lyric) => {
+  chalk.red(lyric)
+  process.exit()
+}
+module.exports = (project) => {
+  if (!project) errorLog('请输入需要创建的项目名称！')
+  prompt(questions).then(({name, place}) => {
+    const gitPlace = tplList[name]['owner/name']
+    const gitBranch = tplList[name]['branch']
+    const spinner = ora('模板下载中...')
+    spinner.start()
+    download(`${gitPlace}#${gitBranch}`, `${place}${project}`, err => {
+      if (err) {
+        console.log(chalk.red(err))
+        process.exit()
+      }
+      spinner.stop()
+      console.log(chalk.green('项目初始化成功！'))
+    })
   })
-})
+}
