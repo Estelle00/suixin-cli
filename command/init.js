@@ -27,13 +27,15 @@ module.exports = async (project) => {
       name: 'name',
       message: '请选择需要生成的模板：',
       choices: choices
-    },
+    }
+    /*
     {
       type: 'input',
       name: 'place',
       message: '请输入初始化项目路径：',
       default: '../'
     }
+    */
   ]
   prompt(questions).then(({name, place}) => {
     const gitPlace = newList[name]['owner/name']
@@ -48,7 +50,7 @@ module.exports = async (project) => {
         console.log(chalk.red(err))
         process.exit()
       }
-      generate(project, tmp, place, err => {
+      generate(project, tmp, place = '.', err => {
         if (err) console.log(chalk.red(err))
         console.log(chalk.green('项目初始化成功！'))
       })
