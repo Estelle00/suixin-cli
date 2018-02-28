@@ -6,17 +6,10 @@ const {writeTemplate} = require('../utils/index')
 const tplList = require('../templates')
 const questions = [
   {
-    type: 'input',
+    type: 'list',
     name: 'name',
-    message: '请输入您要删除的模板名称：',
-    validate (val) {
-      if (tplList[val]) {
-        return true
-      } else if (val === '') {
-        return '请如实您要删除的模板名称！'
-      }
-      return '模板名称不存在！'
-    }
+    message: '请选择您要删除的模板名称：',
+    choices: Object.keys(tplList)
   }
 ]
 module.exports = prompt(questions).then(({name}) => {
