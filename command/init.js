@@ -52,7 +52,7 @@ module.exports = async (project) => {
       }
       generate(project, tmp, place = '.', err => {
         if (err) console.log(chalk.red(err))
-        console.log(chalk.green('项目初始化成功！'))
+        console.log(chalk.green('项目创建成功！'))
       })
     })
   })
