@@ -1204,6 +1204,10 @@ ora@^2.0.0:
     strip-ansi "^4.0.0"
     wcwidth "^1.0.1"
 
+os-homedir@^1.0.0:
+  version "1.0.2"
+  resolved "http://192.168.3.239:4873/os-homedir/-/os-homedir-1.0.2.tgz#ffbc4988336e0e833de0c168c7ef152121aa7fb3"
+
 os-tmpdir@~1.0.2:
   version "1.0.2"
   resolved "http://192.168.3.239:4873/os-tmpdir/-/os-tmpdir-1.0.2.tgz#bbe67406c79aa85c5cfec766fe5734555dfa1274"
@@ -1676,6 +1680,12 @@ url-parse-lax@^1.0.0:
 url-to-options@^1.0.1:
   version "1.0.1"
   resolved "http://192.168.3.239:4873/url-to-options/-/url-to-options-1.0.1.tgz#1505a03a289a48cbd7a434efbaeec5055f5633a9"
+
+user-home@^2.0.0:
+  version "2.0.0"
+  resolved "http://192.168.3.239:4873/user-home/-/user-home-2.0.0.tgz#9c70bfd8169bc1dcbf48604e0f04b8b49cde9e9f"
+  dependencies:
+    os-homedir "^1.0.0"
 
 util-deprecate@~1.0.1:
   version "1.0.2"

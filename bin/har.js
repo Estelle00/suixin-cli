@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const {resolve, join} = require('path')
+const chalk = require('chalk')
 process.env.NODE_PATH = join(__dirname, '../node_modules/')
 const program = require('commander')
 
@@ -35,6 +36,10 @@ program
   .description('初始化一个新的项目！')
   .alias('i')
   .action((project) => {
+    if (!project) {
+      chalk.red('请填写项目名称')
+      process.exit()
+    }
     require('../command/init')(project)
   })
 

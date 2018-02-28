@@ -2,7 +2,7 @@
  * Created by liubingwen on 2018/2/27.
  */
 const {prompt} = require('inquirer')
-const {writeTemplate} = require('../utils/index')
+const {writeTemplate} = require('../lib/index')
 const tplList = require('../templates')
 const questions = [
   {
