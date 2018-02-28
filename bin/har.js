@@ -28,7 +28,6 @@ program
   .description('初始化一个新的项目！')
   .alias('i')
   .action((project) => {
-    console.log(`输如内容：projectName=${project}`)
     require('../command/init')(project)
   })
 
