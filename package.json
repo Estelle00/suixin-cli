@@ -1,11 +1,11 @@
 {
   "name": "har-cli",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "前端各个项目脚手架",
   "repository": "ssh://git@192.168.3.200:10022/frontend/har-cli.git",
   "author": "刘炳文 <liubingwen@huianrong.com>",
   "bin": {
-    "har": "bin/har"
+    "har": "bin/har.js"
   },
   "dependencies": {
     "chalk": "^1.1.3",
