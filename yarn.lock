@@ -197,12 +197,6 @@ clone@^1.0.2:
   version "1.0.3"
   resolved "http://192.168.3.239:4873/clone/-/clone-1.0.3.tgz#298d7e2231660f40c003c2ed3140decf3f53085f"
 
-co-prompt@^1.0.0:
-  version "1.0.0"
-  resolved "http://192.168.3.239:4873/co-prompt/-/co-prompt-1.0.0.tgz#fb370e9edac48576b27a732fe5d7f21d9fc6e6f6"
-  dependencies:
-    keypress "~0.2.1"
-
 co@^4.6.0:
   version "4.6.0"
   resolved "http://192.168.3.239:4873/co/-/co-4.6.0.tgz#6ea6bdf3d853ae54ccb8e47bfa0bf3f9031fb184"
@@ -898,10 +892,6 @@ json-schema-traverse@^0.3.0:
 json-stable-stringify-without-jsonify@^1.0.1:
   version "1.0.1"
   resolved "http://192.168.3.239:4873/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
-
-keypress@~0.2.1:
-  version "0.2.1"
-  resolved "http://192.168.3.239:4873/keypress/-/keypress-0.2.1.tgz#1e80454250018dbad4c3fe94497d6e67b6269c77"
 
 levn@^0.3.0, levn@~0.3.0:
   version "0.3.0"
