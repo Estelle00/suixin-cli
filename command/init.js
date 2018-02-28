@@ -37,29 +37,33 @@ const chalk = require('chalk')
 const download = require('download-git-repo')
 const ora = require('ora')
 const tplList = require('../templates')
-const questions = [
-  {
-    type: 'list',
-    name: 'name',
-    message: '请选择需要生成的模板：',
-    choices: Object.keys(tplList)
-  },
-  {
-    type: 'input',
-    name: 'place',
-    message: '请输入初始化项目路径：',
-    default: '../'
-  }
-]
+const {getGitList} = require('../utils/index')
 const errorLog = (lyric) => {
   chalk.red(lyric)
   process.exit()
 }
-module.exports = (project) => {
+module.exports = async (project) => {
   if (!project) errorLog('请输入需要创建的项目名称！')
+  const gitList = await getGitList()
+  const newList = {...gitList, ...tplList}
+  const choices = Object.keys(newList)
+  const questions = [
+    {
+      type: 'list',
+      name: 'name',
+      message: '请选择需要生成的模板：',
+      choices: choices
+    },
+    {
+      type: 'input',
+      name: 'place',
+      message: '请输入初始化项目路径：',
+      default: '../'
+    }
+  ]
   prompt(questions).then(({name, place}) => {
-    const gitPlace = tplList[name]['owner/name']
-    const gitBranch = tplList[name]['branch']
+    const gitPlace = newList[name]['owner/name']
+    const gitBranch = newList[name]['branch']
     const spinner = ora('模板下载中...')
     spinner.start()
     download(`${gitPlace}#${gitBranch}`, `${place}${project}`, {clone: true}, err => {

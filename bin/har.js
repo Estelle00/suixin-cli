@@ -16,6 +16,13 @@ program
   })
 
 program
+  .command('update')
+  .alias('a')
+  .action(() => {
+    require('../command/update')
+  })
+
+program
   .command('list')
   .description('列出所有可用模板！')
   .alias('l')

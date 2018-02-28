@@ -2,7 +2,9 @@
  * Created by liubingwen on 2018/2/27.
  */
 const Table = require('cli-table')
+const request = require('request')
 const {writeFile} = require('fs')
+const ora = require('ora')
 const chalk = require('chalk')
 const {TEMPLATES_PATH} = require('../config/index')
 const table = new Table({
@@ -11,13 +13,41 @@ const table = new Table({
     head: ['green']
   }
 })
-const listTable = (tplList, lyric) => {
-  const list = Object.keys(tplList)
+let gitList = null
+const getGitList = () => {
+  if (gitList) return gitList
+  const spinner = ora('\n查询模板中...')
+  spinner.start()
+  return new Promise((resolve, reject) => {
+    request({
+      url: 'http://192.168.3.200:10080/api/v4/groups/har-templates/projects?private_token=cuKAsR7EYcyJrmNGzmkX'
+    }, (err, res, body) => {
+      spinner.stop()
+      if (err) reject(err)
+      const data = JSON.parse(body)
+      const arr = {}
+      data.forEach(item => {
+        // eslint-disable-next-line camelcase
+        const {name, web_url, default_branch} = item
+        arr[name] = {
+          'owner/name': web_url.replace(/\/har-templates/, ':har-templates'),
+          'branch': default_branch
+        }
+      })
+      gitList = arr
+      resolve(arr)
+    })
+  })
+}
+const listTable = async (tplList, lyric) => {
+  const gitList = await getGitList()
+  const newList = {...gitList, ...tplList}
+  const list = Object.keys(newList)
   if (list.length > 0) {
     list.forEach(key => {
       const templateName = key
-      const name = tplList[key]['owner/name']
-      const branch = tplList[key]['branch']
+      const name = newList[key]['owner/name']
+      const branch = newList[key]['branch']
       table.push([templateName, name, branch])
       if (table.length === list.length) {
         log(lyric)
@@ -42,5 +72,6 @@ const writeTemplate = (tplList, lyric) => {
 }
 module.exports = {
   listTable,
-  writeTemplate
+  writeTemplate,
+  getGitList
 }

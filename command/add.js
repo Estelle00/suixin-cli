@@ -4,13 +4,16 @@
 const {prompt} = require('inquirer')
 const {writeTemplate} = require('../utils/index')
 const tplList = require('../templates')
+const {getGitList} = require('../utils/index')
 const question = [
   {
     type: 'input',
     name: 'name',
     message: '请输入添加的模板名称：',
-    validate (val) {
-      if (tplList[val]) {
+    async validate (val) {
+      const gitList = await getGitList()
+      const newList = {...gitList, tplList}
+      if (newList[val]) {
         return '模板已经存在！'
       } else if (val === '') {
         return '模板名称不能为空！'
