@@ -6,13 +6,12 @@ const program = require('commander')
 program
   .version(require('../package').version)
   .usage('<command> [options]')
-  .parse(process.argv)
-
 program
   .command('add')
   .description('添加一个新的模板！')
   .alias('a')
   .action(() => {
+    console.log(`add a template start`)
     require('../command/add')
   })
 
@@ -40,9 +39,8 @@ program
   .action(() => {
     require('../command/delete')
   })
-
-program.parse(process.argv)
-
+program
+  .parse(process.argv)
 if (!program.args.length) {
   program.help()
 }

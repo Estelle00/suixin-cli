@@ -33,9 +33,6 @@ module.exports = () => {
 }
 */
 const { prompt } = require('inquirer')
-const { writeFile } = require('fs')
-const { listTable } = require('../utils')
-const { resolve } = require('path')
 const chalk = require('chalk')
 const download = require('download-git-repo')
 const ora = require('ora')
@@ -65,7 +62,7 @@ module.exports = (project) => {
     const gitBranch = tplList[name]['branch']
     const spinner = ora('模板下载中...')
     spinner.start()
-    download(`${gitPlace}#${gitBranch}`, `${place}${project}`, err => {
+    download(`${gitPlace}#${gitBranch}`, `${place}${project}`, {clone: true}, err => {
       if (err) {
         console.log(chalk.red(err))
         process.exit()
