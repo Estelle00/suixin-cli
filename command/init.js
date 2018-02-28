@@ -16,8 +16,15 @@ const errorLog = (lyric) => {
   chalk.red(lyric)
   process.exit()
 }
-module.exports = async (project) => {
-  if (!project) errorLog('请输入需要创建的项目名称！')
+module.exports = (project) => {
+  const inPlace = !project || project === '.'
+  const name = inPlace ? path.relative('../', process.cwd()) : project
+  console.log('name', process.cwd())
+  const to = path.resolve(name)
+  run(name)
+}
+
+const run = async (project) => {
   const gitList = await getGitList()
   const newList = {...gitList, ...tplList}
   const choices = Object.keys(newList)
