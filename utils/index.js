@@ -14,10 +14,12 @@ const table = new Table({
   }
 })
 let gitList = null
-const getGitList = () => {
+const getGitList = (show = true) => {
   if (gitList) return gitList
-  const spinner = ora('\n查询模板中...')
-  spinner.start()
+  const spinner = ora('查询模板中...')
+  if (show) {
+    spinner.start()
+  }
   return new Promise((resolve, reject) => {
     request({
       url: 'http://192.168.3.200:10080/api/v4/groups/har-templates/projects?private_token=cuKAsR7EYcyJrmNGzmkX'

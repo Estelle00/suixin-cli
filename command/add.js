@@ -11,7 +11,7 @@ const question = [
     name: 'name',
     message: '请输入添加的模板名称：',
     async validate (val) {
-      const gitList = await getGitList()
+      const gitList = await getGitList(false)
       const newList = {...gitList, tplList}
       if (newList[val]) {
         return '模板已经存在！'
