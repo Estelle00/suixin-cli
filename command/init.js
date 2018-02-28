@@ -17,7 +17,7 @@ const errorLog = (lyric) => {
   process.exit()
 }
 module.exports = (project) => {
-  const inPlace = !project || project === '.'
+  const inPlace = (project === '.')
   const name = inPlace ? path.relative('../', process.cwd()) : project
   console.log('name', process.cwd())
   const to = path.resolve(name)
