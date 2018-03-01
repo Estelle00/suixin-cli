@@ -16,7 +16,7 @@ npm link
 ```
 
 # 使用
-打开你的控制台输入`har`或者 `har -h`，你会看到以下信息
+打开控制台输入`har`或者 `har -h`，你会看到以下信息
 ```
   Usage: har <command> [options]
 

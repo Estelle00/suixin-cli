@@ -1,74 +1,71 @@
 /**
  * Created by liubingwen on 2018/2/27.
  */
-/*
-const exec = require('child_process').exec
-const co = require('co')
-const prompt = require('co-prompt')
-const config = require('../templates')
-const chalk = require('chalk')
-module.exports = () => {
-  co(function * () {
-    // 处理用户输入
-    const tplName = yield prompt('Template name: ')
-    if (!config[tplName]) {
-      console.log(chalk.red('\n x Template does not exit!'))
-      process.exit()
-    }
-    const projectName = yield prompt('Project name: ')
-    const gitUrl = config[tplName].url
-    const branch = config[tplName].branch
-    const cmdStr = `git clone ${gitUrl} ${projectName} && cd ${projectName} && git checkout ${branch}`
-    console.log(chalk.white('\n Start generating...'))
-    exec(cmdStr, (error, stdout, stderr) => {
-      if (error) {
-        console.log(error)
-        process.exit()
-      }
-      console.log(chalk.green('\n √ Generation completed!'))
-      console.log(`\n cd ${projectName} && yarn \n`)
-      process.exit()
-    })
-  })
-}
-*/
 const { prompt } = require('inquirer')
+const exists = require('fs').existsSync
+const rm = require('rimraf').sync
+const home = require('user-home')
+const path = require('path')
 const chalk = require('chalk')
 const download = require('download-git-repo')
 const ora = require('ora')
 const tplList = require('../templates')
-const questions = [
-  {
-    type: 'list',
-    name: 'name',
-    message: '请选择需要生成的模板：',
-    choices: Object.keys(tplList)
-  },
-  {
-    type: 'input',
-    name: 'place',
-    message: '请输入初始化项目路径：',
-    default: '../'
-  }
-]
-const errorLog = (lyric) => {
-  chalk.red(lyric)
-  process.exit()
-}
+const {getGitList} = require('../lib/index')
+const generate = require('../lib/generate')
+const logger = require('../lib/logger')
+const checkVersion = require('../lib/check-version')
 module.exports = (project) => {
-  if (!project) errorLog('请输入需要创建的项目名称！')
-  prompt(questions).then(({name, place}) => {
-    const gitPlace = tplList[name]['owner/name']
-    const gitBranch = tplList[name]['branch']
-    const spinner = ora('模板下载中...')
-    spinner.start()
-    download(`${gitPlace}#${gitBranch}`, `${place}${project}`, {clone: true}, err => {
-      if (err) {
-        console.log(chalk.red(err))
-        process.exit()
+  const inPlace = (project === '.')
+  const name = inPlace ? path.relative('../', process.cwd()) : project
+  console.log('name', process.cwd())
+  const to = path.resolve(name)
+  if (inPlace || exists(to)) {
+    prompt([{
+      type: 'confirm',
+      message: inPlace ? '确定在当前目录下创建项目吗？' : '当前目录已存在，是否继续？',
+      name: 'ok'
+    }]).then(({ok}) => {
+      if (ok) {
+        run(name, to)
       }
-      spinner.stop()
-      console.log(chalk.green('项目初始化成功！'))
+    }).catch(logger.fatal)
+  } else {
+    run(name, to)
+  }
+}
+
+const run = async (project, to) => {
+  const gitList = await getGitList()
+  const newList = {...gitList, ...tplList}
+  const choices = Object.keys(newList)
+  const questions = [
+    {
+      type: 'list',
+      name: 'name',
+      message: '请选择需要生成的模板：',
+      choices: choices
+    }
+  ]
+  prompt(questions).then(({name}) => {
+    checkVersion(() => {
+      const gitPlace = newList[name]['owner/name']
+      const gitBranch = newList[name]['branch']
+      const tmp = path.join(home, '.har-templates', name.replace(/[/:]/g, '-'))
+      const spinner = ora('模板下载中...')
+      spinner.start()
+      if (exists(tmp)) rm(tmp)
+      download(`${gitPlace}#${gitBranch}`, tmp, {clone: true}, err => {
+        spinner.stop()
+        if (err) logger.fatal(err)
+        generate(project, tmp, to, err => {
+          if (err) logger.fatal(err)
+          logger.success('创建%s项目成功！', project)
+        })
+      })
     })
+
   })
+}
+const downloadAndGenerate = (template) => {
+
 }
