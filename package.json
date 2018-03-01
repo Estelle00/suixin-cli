@@ -2,11 +2,20 @@
   "name": "har-cli",
   "version": "2.0.2",
   "description": "一个简单生成项目的工具",
-  "repository": "ssh://git@192.168.3.200:10022/frontend/har-cli.git",
-  "author": "刘炳文 <liubingwen@huianrong.com>",
+  "repository": {
+    "type": "git",
+    "url": "http://192.168.3.200:10080/frontend/har-cli"
+  },
+  "author": {
+    "name": "刘炳文",
+    "email": "liubingwen@huianrong.com"
+  },
   "bin": {
     "har": "bin/har.js"
   },
+  "keywords": [
+    "har-cli"
+  ],
   "dependencies": {
     "async": "^2.6.0",
     "chalk": "^1.1.3",
@@ -21,6 +30,7 @@
     "read-metadata": "^1.0.0",
     "request": "^2.83.0",
     "rimraf": "^2.6.2",
+    "semver": "^5.5.0",
     "user-home": "^2.0.0",
     "validate-npm-package-name": "^3.0.0"
   },

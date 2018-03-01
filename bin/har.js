@@ -27,8 +27,8 @@ program
   .command('init [project-name]')
   .description('初始化一个新的项目！')
   .alias('i')
-  .action((project) => {
-    require('../command/init')(project = '.')
+  .action((project = '.') => {
+    require('../command/init')(project)
   })
 
 program
