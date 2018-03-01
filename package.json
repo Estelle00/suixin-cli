@@ -1,20 +1,38 @@
 {
   "name": "har-cli",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "一个简单生成项目的工具",
-  "repository": "ssh://git@192.168.3.200:10022/frontend/har-cli.git",
-  "author": "刘炳文 <liubingwen@huianrong.com>",
+  "repository": {
+    "type": "git",
+    "url": "http://192.168.3.200:10080/frontend/har-cli"
+  },
+  "author": {
+    "name": "刘炳文",
+    "email": "liubingwen@huianrong.com"
+  },
   "bin": {
     "har": "bin/har.js"
   },
+  "keywords": [
+    "har-cli"
+  ],
   "dependencies": {
+    "async": "^2.6.0",
     "chalk": "^1.1.3",
     "cli-table": "^0.3.1",
     "commander": "^2.9.0",
+    "consolidate": "^0.15.0",
     "download-git-repo": "^1.0.2",
+    "handlebars": "^4.0.11",
     "inquirer": "^5.1.0",
+    "metalsmith": "^2.3.0",
     "ora": "^2.0.0",
-    "request": "^2.83.0"
+    "read-metadata": "^1.0.0",
+    "request": "^2.83.0",
+    "rimraf": "^2.6.2",
+    "semver": "^5.5.0",
+    "user-home": "^2.0.0",
+    "validate-npm-package-name": "^3.0.0"
   },
   "devDependencies": {
     "eslint": "^4.18.1",
@@ -23,5 +41,8 @@
     "eslint-plugin-node": "^6.0.1",
     "eslint-plugin-promise": "^3.6.0",
     "eslint-plugin-standard": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=8.0.0"
   }
 }

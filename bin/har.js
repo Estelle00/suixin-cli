@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const {resolve, join} = require('path')
+const chalk = require('chalk')
 process.env.NODE_PATH = join(__dirname, '../node_modules/')
 const program = require('commander')
 
@@ -14,14 +15,6 @@ program
     console.log(`add a template start`)
     require('../command/add')
   })
-
-program
-  .command('update')
-  .alias('a')
-  .action(() => {
-    require('../command/update')
-  })
-
 program
   .command('list')
   .description('列出所有可用模板！')
@@ -34,7 +27,7 @@ program
   .command('init [project-name]')
   .description('初始化一个新的项目！')
   .alias('i')
-  .action((project) => {
+  .action((project = '.') => {
     require('../command/init')(project)
   })
 
