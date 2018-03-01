@@ -12,6 +12,7 @@ const ora = require('ora')
 const tplList = require('../templates')
 const {getGitList} = require('../lib/index')
 const generate = require('../lib/generate')
+const logger = require('../lib/logger')
 const errorLog = (lyric) => {
   chalk.red(lyric)
   process.exit()
@@ -21,10 +22,22 @@ module.exports = (project) => {
   const name = inPlace ? path.relative('../', process.cwd()) : project
   console.log('name', process.cwd())
   const to = path.resolve(name)
-  run(name)
+  if (inPlace || exists(to)) {
+    prompt([{
+      type: 'confirm',
+      message: inPlace ? '确定在当前目录下创建项目吗？' : '当前目录已存在，是否继续？',
+      name: 'ok'
+    }]).then(({ok}) => {
+      if (ok) {
+        run(name, to)
+      }
+    }).catch(logger.fatal)
+  } else {
+    run(name, to)
+  }
 }
 
-const run = async (project) => {
+const run = async (project, to) => {
   const gitList = await getGitList()
   const newList = {...gitList, ...tplList}
   const choices = Object.keys(newList)
@@ -45,6 +58,7 @@ const run = async (project) => {
     */
   ]
   prompt(questions).then(({name, place}) => {
+
     const gitPlace = newList[name]['owner/name']
     const gitBranch = newList[name]['branch']
     const tmp = path.join(home, '.har-templates', name.replace(/[/:]/g, '-'))
