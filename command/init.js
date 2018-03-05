@@ -6,14 +6,12 @@ const exists = require('fs').existsSync
 const rm = require('rimraf').sync
 const home = require('user-home')
 const path = require('path')
-const chalk = require('chalk')
 const download = require('download-git-repo')
 const ora = require('ora')
 const tplList = require('../templates')
 const {getGitList} = require('../lib/index')
 const generate = require('../lib/generate')
 const logger = require('../lib/logger')
-const checkVersion = require('../lib/check-version')
 module.exports = (project) => {
   const inPlace = (project === '.')
   const name = inPlace ? path.relative('../', process.cwd()) : project
@@ -47,25 +45,19 @@ const run = async (project, to) => {
     }
   ]
   prompt(questions).then(({name}) => {
-    checkVersion(() => {
-      const gitPlace = newList[name]['owner/name']
-      const gitBranch = newList[name]['branch']
-      const tmp = path.join(home, '.har-templates', name.replace(/[/:]/g, '-'))
-      const spinner = ora('模板下载中...')
-      spinner.start()
-      if (exists(tmp)) rm(tmp)
-      download(`${gitPlace}#${gitBranch}`, tmp, {clone: true}, err => {
-        spinner.stop()
+    const gitPlace = newList[name]['owner/name']
+    const gitBranch = newList[name]['branch']
+    const tmp = path.join(home, '.har-templates', name.replace(/[/:]/g, '-'))
+    const spinner = ora('模板下载中...')
+    spinner.start()
+    if (exists(tmp)) rm(tmp)
+    download(`${gitPlace}#${gitBranch}`, tmp, {clone: true}, err => {
+      spinner.stop()
+      if (err) logger.fatal(err)
+      generate(project, tmp, to, err => {
         if (err) logger.fatal(err)
-        generate(project, tmp, to, err => {
-          if (err) logger.fatal(err)
-          logger.success('创建%s项目成功！', project)
-        })
+        logger.success('创建%s项目成功！', project)
       })
     })
-
   })
-}
-const downloadAndGenerate = (template) => {
-
 }
