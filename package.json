@@ -1,6 +1,6 @@
 {
   "name": "har-cli",
-  "version": "2.1.6",
+  "version": "2.1.7",
   "description": "一个简单生成项目的工具",
   "repository": {
     "type": "git",
