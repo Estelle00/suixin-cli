@@ -15,8 +15,7 @@ const logger = require('../lib/logger')
 module.exports = (project) => {
   const inPlace = (project === '.')
   const name = inPlace ? path.relative('../', process.cwd()) : project
-  console.log('name', process.cwd())
-  const to = path.resolve(name)
+  const to = inPlace ? process.cwd() : path.resolve(name)
   if (inPlace || exists(to)) {
     prompt([{
       type: 'confirm',
