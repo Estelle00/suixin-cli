@@ -15,7 +15,6 @@ program
     checkVersion(() => {
       require('../command/add')
     })
-    console.log(`add a template start`)
   })
 program
   .command('list')
