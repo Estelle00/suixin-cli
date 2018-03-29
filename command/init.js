@@ -46,11 +46,11 @@ const run = async (project, to) => {
   prompt(questions).then(({name}) => {
     const gitPlace = newList[name]['owner/name']
     const gitBranch = newList[name]['branch']
-    const tmp = path.join(home, '.har-templates', name.replace(/[/:]/g, '-'))
+    const tmp = path.join(home, '.suixin-web-templates', name.replace(/[/:]/g, '-'))
     const spinner = ora('模板下载中...')
     spinner.start()
     if (exists(tmp)) rm(tmp)
-    download(`${gitPlace}#${gitBranch}`, tmp, {clone: true}, err => {
+    download(`${gitPlace}#${gitBranch}`, tmp, {clone: false}, err => {
       spinner.stop()
       if (err) logger.fatal(err)
       generate(project, tmp, to, err => {

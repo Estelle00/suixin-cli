@@ -1,20 +1,20 @@
 {
-  "name": "har-cli",
-  "version": "2.1.9",
+  "name": "suixin-cli",
+  "version": "1.0.0",
   "description": "一个简单生成项目的工具",
   "repository": {
     "type": "git",
-    "url": "http://192.168.3.200:10080/frontend/har-cli"
+    "url": "http://192.168.3.200:10080/frontend/suixin-cli"
   },
   "author": {
     "name": "刘炳文",
     "email": "liubingwen@huianrong.com"
   },
   "bin": {
-    "har": "bin/har.js"
+    "suixin": "bin/suixin.js"
   },
   "keywords": [
-    "har-cli"
+    "suixin-cli"
   ],
   "dependencies": {
     "async": "^2.6.0",

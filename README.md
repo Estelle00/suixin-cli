@@ -1,10 +1,10 @@
 
-# har-cli
-汇安融内部使用的一个简单生成项目的工具
+# suixin-cli
+一个简单生成项目的工具
 
 # 安装
 ```
-npm install har-cli -g
+npm install suixin-cli -g
 ```
 or
 ```
@@ -16,9 +16,9 @@ npm link
 ```
 
 # 使用
-打开控制台输入`har`或者 `har -h`，你会看到以下信息
+打开控制台输入`suixin`或者 `suixin -h`，你会看到以下信息
 ```
-  Usage: har <command> [options]
+  Usage: suixin <command> [options]
 
   Options:
 
