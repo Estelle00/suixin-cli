@@ -8,9 +8,9 @@ npm install suixin-cli -g
 ```
 or
 ```
-git clone http://192.168.3.200:10080/frontend/har-cli.git
+git clone https://github.com/Estelle00/suixin-cli.git
 
-cd har-cli && npm install
+cd suixin-cli && yarn install
 
 npm link
 ```
